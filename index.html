@@ -1,72 +1,150 @@
 <!doctype html>
+
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#071a2b">
   <title>PathPharm — Download</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#0f1724;--card:#08121a;--accent:#06b6d4;--muted:#9fb1c9}
-    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
-      background:linear-gradient(180deg,#04101a 0%,#071a2b 100%);color:#e6eef6}
-    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;
-      min-height:100vh;padding:20px;text-align:center}
-    h1.hero-title{font-size:28px;margin-bottom:10px}
-    p.hero-desc{max-width:600px;color:var(--muted);margin-bottom:30px}
-    .big-btn{display:inline-flex;align-items:center;justify-content:center;padding:18px 32px;
-      border-radius:14px;text-decoration:none;background:linear-gradient(90deg,var(--accent),#7c3aed);
-      color:#032022;font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(0,0,0,0.5);margin:20px 0}
-    main{max-width:900px;margin:60px auto;padding:0 20px}
-    h2{font-size:22px;text-align:center}
-    p.lead{text-align:center;color:var(--muted)}
-    dl.meta{margin-top:20px}
-    dl.meta dt{font-weight:700}
-    dl.meta dd{margin:6px 0 12px;color:var(--muted)}
-    .changelog,.notes{margin-top:20px;background:rgba(255,255,255,0.04);
-      padding:16px;border-radius:10px;color:var(--muted);font-size:14px}
+    :root{
+      --bg-1:#071a2b;
+      --bg-2:#042433;
+      --accent-1:#06b6d4;
+      --accent-2:#7c3aed;
+      --muted:#9fb1c9;
+      --text:#e6eef6;
+      --radius:14px;
+      --max-w:880px;
+    }/* Mobile-first, more generous spacing */
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 100%);color:var(--text);-webkit-font-smoothing:antialiased}
+
+.safe{padding:calc(env(safe-area-inset-top,20px)) 20px 40px;display:flex;flex-direction:column;align-items:stretch;gap:20px}
+
+header{display:flex;align-items:center;gap:14px;padding-top:6px}
+.logo{width:64px;height:64px;border-radius:12px;object-fit:cover;flex:0 0 64px}
+
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand .small{font-size:12px;color:var(--muted);font-weight:600}
+.brand .sub{font-size:13px;color:var(--muted)}
+
+.hero{
+  display:flex;flex-direction:column;gap:18px;align-items:center;text-align:center;padding:18px 6px;border-radius:12px
+}
+
+h1{font-size:24px;margin:0;line-height:1.1}
+.subtitle{font-size:14px;color:var(--muted);margin-top:4px;max-width:640px}
+
+/* Primary download CTA: wide and prominent */
+.download-wrap{width:100%;max-width:var(--max-w);padding:6px}
+.download-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:18px;border-radius:14px;font-weight:800;font-size:17px;text-decoration:none;
+  background:linear-gradient(90deg,var(--accent-1),var(--accent-2));color:#022;border:none;box-shadow:0 12px 36px rgba(7,20,30,0.55);line-height:1
+}
+.download-btn:active{transform:translateY(1px)}
+.download-btn:focus{outline:3px solid rgba(6,182,212,0.18);outline-offset:3px}
+
+.quick-meta{display:flex;justify-content:center;gap:18px;margin-top:8px;color:var(--muted);font-size:13px}
+
+/* Body content has larger gaps and breathing room */
+main{padding:18px 6px 60px;max-width:var(--max-w);margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.section-title{font-size:16px;margin:6px 0 6px}
+.muted{color:var(--muted);font-size:15px;line-height:1.6}
+
+.list{background:transparent;padding-left:20px;margin:10px 0}
+
+.meta-list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
+.meta-item{font-size:14px;color:var(--muted);background:transparent;padding:8px;border-radius:10px}
+
+/* subtle visual separators without cards */
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent);margin:6px 0 6px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:6px 8px;margin-top:6px}
+
+/* large screens tweak */
+@media(min-width:900px){
+  .safe{padding:28px 44px 48px}
+  header{gap:18px}
+  h1{font-size:28px}
+  .download-wrap{max-width:380px}
+  main{gap:22px}
+}
+
   </style>
 </head>
 <body>
-  <section class="hero">
-    <h1 class="hero-title">Download PathPharm</h1>
-    <p class="hero-desc">
-      Get the official PathPharm Android APK and access pathology and pharmacology resources right on your device.
-    </p>
+  <div class="safe">
+    <header>
+      <img src="icon.png" alt="PathPharm logo" class="logo">
+      <div class="brand">
+        <div class="small">PathPharm</div>
+        <div class="sub">Pathology & Pharmacology • Android APK</div>
+      </div>
+    </header><section class="hero" aria-labelledby="download-heading">
+  <div style="width:100%">
+    <h1 id="download-heading">Get PathPharm on your Android device</h1>
+    <div class="subtitle">Install the compact, offline-ready PathPharm APK — clear, focused pathology & pharmacology study material that fits on any device.</div>
+  </div>
 
-    <!-- Direct download button -->
-    <a class="big-btn"
-       href="PathPharm.apk"
-       download="PathPharm.apk">
-       Download PathPharm.apk
+  <!-- Primary CTA: first thing user sees -->
+  <div class="download-wrap" style="width:100%">
+    <a class="download-btn" href="PathPharm.apk" download="PathPharm.apk" aria-label="Download PathPharm APK">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3v12" stroke="#022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8 11l4 4 4-4" stroke="#022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 21H3" stroke="#022" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      Download PathPharm.apk
     </a>
-  </section>
-
-  <main>
-    <h2>More Details</h2>
-    <p class="lead">Version info, changelog and install instructions.</p>
-
-    <dl class="meta">
-      <dt>File</dt><dd>PathPharm.apk</dd>
-      <dt>Version</dt><dd>v1.0</dd>
-      <dt>Size</dt><dd>~(check host)</dd>
-      <dt>Last updated</dt><dd>—</dd>
-    </dl>
-
-    <div class="changelog">
-      <strong>Changelog</strong>
-      <ul>
-        <li>Initial release — core features included.</li>
-        <li>Bug fixes and performance improvements.</li>
-      </ul>
+    <div class="quick-meta" aria-hidden="true">
+      <div>v1.0.0</div>
+      <div>1.3 MB</div>
     </div>
+  </div>
 
-    <div class="notes">
-      <strong>Install notes</strong>
-      <ul>
-        <li>Enable <em>Install unknown apps</em> for your browser in Android Settings to install this APK.</li>
-        <li>If the download fails, try again or use another browser.</li>
-        <li>Consider scanning the APK with an antivirus if you’re unsure.</li>
-      </ul>
+  <div class="divider" aria-hidden="true"></div>
+
+</section>
+
+<main>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    <h2 class="section-title">About this build</h2>
+    <p class="muted">This APK contains carefully curated pathology and pharmacology study material. Before installing, enable <strong>Install unknown apps</strong> for your browser in Android Settings. The build is intentionally small for fast downloads and limited storage use.</p>
+  </div>
+
+  <div>
+    <div class="section-title">Details</div>
+    <div class="meta-list">
+      <div class="meta-item"><strong>File</strong><div>PathPharm.apk</div></div>
+      <div class="meta-item"><strong>Version</strong><div>v1.0.0</div></div>
+      <div class="meta-item"><strong>Size</strong><div>1.3 MB</div></div>
+      <div class="meta-item"><strong>Signed</strong><div class="muted">Unsigned build</div></div>
     </div>
-  </main>
-</body>
+  </div>
+
+  <div>
+    <div class="section-title">Changelog</div>
+    <ul class="list muted">
+      <li>v1.0.0 — Initial release with core features.</li>
+      <li>Bug fixes and performance improvements.</li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="section-title">Install notes</div>
+    <ul class="list muted">
+      <li>Enable <em>Install unknown apps</em> for your browser in Android Settings.</li>
+      <li>If installation is blocked, try another browser or check storage & permissions.</li>
+      <li>Scan with an antivirus if you need extra assurance.</li>
+    </ul>
+  </div>
+
+</main>
+
+
+  </div>  <script>
+    (function(){
+      const btn = document.querySelector('.download-btn');
+      if(!btn) return;
+      btn.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); btn.click(); } });
+    })();
+  </script></body>
 </html>
