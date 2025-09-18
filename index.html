@@ -1,5 +1,4 @@
-<!doctype html>
-
+    <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -7,149 +6,67 @@
   <title>PathPharm — Download</title>
   <style>
     :root{--bg:#0f1724;--card:#08121a;--accent:#06b6d4;--muted:#9fb1c9}
-    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#04101a 0%,#071a2b 100%);color:#e6eef6}
-    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;padding:20px;text-align:center}
+    html,body{margin:0;height:100%;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+      background:linear-gradient(180deg,#04101a 0%,#071a2b 100%);color:#e6eef6}
+    .hero{display:flex;flex-direction:column;justify-content:center;align-items:center;
+      min-height:100vh;padding:20px;text-align:center}
     h1.hero-title{font-size:28px;margin-bottom:10px}
     p.hero-desc{max-width:600px;color:var(--muted);margin-bottom:30px}
-    .big-btn{display:inline-flex;align-items:center;justify-content:center;padding:18px 32px;border-radius:14px;border:none;background:linear-gradient(90deg,var(--accent),#7c3aed);color:#032022;font-weight:800;font-size:20px;cursor:pointer;text-decoration:none;box-shadow:0 4px 20px rgba(0,0,0,0.5);margin:20px 0}
-    .below-desc{max-width:600px;color:var(--muted);margin-top:20px}
-    .progress{height:18px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.05);margin-top:20px;max-width:420px;width:100%}
-    .bar{height:100%;width:0%;transition:width 120ms linear;background:linear-gradient(90deg,var(--accent),#7c3aed)}
-    .stats{display:flex;justify-content:center;gap:20px;font-size:15px;color:var(--muted);margin-top:10px}
-    .small{font-size:13px;color:var(--muted);margin-top:10px}
+    .big-btn{display:inline-flex;align-items:center;justify-content:center;padding:18px 32px;
+      border-radius:14px;text-decoration:none;background:linear-gradient(90deg,var(--accent),#7c3aed);
+      color:#032022;font-weight:800;font-size:20px;box-shadow:0 4px 20px rgba(0,0,0,0.5);margin:20px 0}
     main{max-width:900px;margin:60px auto;padding:0 20px}
     h2{font-size:22px;text-align:center}
     p.lead{text-align:center;color:var(--muted)}
     dl.meta{margin-top:20px}
     dl.meta dt{font-weight:700}
     dl.meta dd{margin:6px 0 12px;color:var(--muted)}
-    .changelog,.notes{margin-top:20px;background:rgba(255,255,255,0.04);padding:16px;border-radius:10px;color:var(--muted);font-size:14px}
+    .changelog,.notes{margin-top:20px;background:rgba(255,255,255,0.04);
+      padding:16px;border-radius:10px;color:var(--muted);font-size:14px}
   </style>
 </head>
 <body>
   <section class="hero">
     <h1 class="hero-title">Download PathPharm</h1>
-    <p class="hero-desc">Get the official PathPharm Android APK and access pathology and pharmacology resources right on your device.</p><a id="downloadBtn" class="big-btn">Download PathPharm.apk</a>
+    <p class="hero-desc">
+      Get the official PathPharm Android APK and access pathology and pharmacology resources right on your device.
+    </p>
 
-<p class="below-desc">Your download will start immediately and you can monitor the live progress below.</p>
+    <!-- Direct download button -->
+    <a class="big-btn"
+       href="https://thunderous-salmiakki-7f6adc.netlify.app/PathPharm.apk"
+       download="PathPharm.apk">
+       Download PathPharm.apk
+    </a>
+  </section>
 
-<div class="progress"><div class="bar" id="bar"></div></div>
-<div class="stats"><span id="downloaded">0.00 MB</span>/<span id="total">-- MB</span> • <span id="percent">0%</span></div>
-<div class="small" id="status">Ready.</div>
-<a id="directLink" style="margin-top:12px;color:var(--muted)" href="PathPharm.apk" download>Direct download (fallback)</a>
-
-  </section>  <main>
+  <main>
     <h2>More Details</h2>
-    <p class="lead">Scroll for version info, changelog and install instructions.</p><dl class="meta">
-  <dt>File</dt>
-  <dd id="fileName">PathPharm.apk</dd>
+    <p class="lead">Version info, changelog and install instructions.</p>
 
-  <dt>Version</dt>
-  <dd id="version">v1.0</dd>
+    <dl class="meta">
+      <dt>File</dt><dd>PathPharm.apk</dd>
+      <dt>Version</dt><dd>v1.0</dd>
+      <dt>Size</dt><dd>~(check host)</dd>
+      <dt>Last updated</dt><dd>—</dd>
+    </dl>
 
-  <dt>Size</dt>
-  <dd id="size">Checking…</dd>
+    <div class="changelog">
+      <strong>Changelog</strong>
+      <ul>
+        <li>Initial release — core features included.</li>
+        <li>Bug fixes and performance improvements.</li>
+      </ul>
+    </div>
 
-  <dt>Last updated</dt>
-  <dd id="updated">—</dd>
-</dl>
-
-<div class="changelog">
-  <strong>Changelog</strong>
-  <ul>
-    <li>Initial release — core features included.</li>
-    <li>Bug fixes and performance improvements.</li>
-  </ul>
-</div>
-
-<div class="notes">
-  <strong>Install notes</strong>
-  <ul>
-    <li>Enable <em>Install unknown apps</em> for your browser in Android Settings to install this APK.</li>
-    <li>If download fails or size shows "unknown", your host may block CORS — use the mirror link above.</li>
-    <li>We recommend scanning the APK with an antivirus if you're unsure.</li>
-  </ul>
-</div>
-
-  </main>  <script>
-    const FILE_URL = 'https://thunderous-salmiakki-7f6adc.netlify.app/PathPharm.apk';
-    const fileNameEl = document.getElementById('fileName');
-    const sizeEl = document.getElementById('size');
-    const updatedEl = document.getElementById('updated');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const directLink = document.getElementById('directLink');
-    const bar = document.getElementById('bar');
-    const downloadedEl = document.getElementById('downloaded');
-    const totalEl = document.getElementById('total');
-    const percentEl = document.getElementById('percent');
-    const statusEl = document.getElementById('status');
-
-    directLink.href = FILE_URL;
-    try{ fileNameEl.textContent = (new URL(FILE_URL)).pathname.split('/').pop() || 'PathPharm.apk'; } catch(e){}
-
-    const toMB = bytes => bytes/(1024*1024);
-    const fmt = (n, d=2) => n.toFixed(d);
-
-    async function fetchMetadata(){
-      try{
-        const resp = await fetch(FILE_URL, {method:'HEAD'});
-        if(!resp.ok) throw new Error('HEAD request failed: ' + resp.status);
-        const len = resp.headers.get('Content-Length') || resp.headers.get('content-length');
-        const lm = resp.headers.get('Last-Modified') || resp.headers.get('last-modified');
-        if(len) sizeEl.textContent = fmt(toMB(parseInt(len,10))) + ' MB'; else sizeEl.textContent = 'Unknown';
-        if(lm) updatedEl.textContent = new Date(lm).toLocaleString();
-        statusEl.textContent = 'Metadata fetched.';
-      } catch(err){
-        sizeEl.textContent = 'Unknown';
-        statusEl.textContent = 'Could not fetch metadata (CORS or server).';
-      }
-    }
-    fetchMetadata();
-
-    downloadBtn.addEventListener('click', async ()=>{
-      statusEl.textContent = 'Starting...';
-      bar.style.width = '0%';
-      downloadedEl.textContent = '0.00 MB';
-      totalEl.textContent = '-- MB';
-      percentEl.textContent = '0%';
-      try{
-        const resp = await fetch(FILE_URL);
-        if(!resp.ok) throw new Error('Network error: ' + resp.status);
-        const lenHeader = resp.headers.get('Content-Length') || resp.headers.get('content-length');
-        const totalBytes = lenHeader ? parseInt(lenHeader,10) : 0;
-        if(totalBytes) totalEl.textContent = fmt(toMB(totalBytes)) + ' MB';
-        const reader = resp.body.getReader();
-        let received = 0;
-        const chunks = [];
-        while(true){
-          const {done, value} = await reader.read();
-          if(done) break;
-          chunks.push(value);
-          received += value.byteLength;
-          downloadedEl.textContent = fmt(toMB(received)) + ' MB';
-          if(totalBytes){
-            const pct = Math.floor((received/totalBytes)*100);
-            percentEl.textContent = pct + '%';
-            bar.style.width = pct + '%';
-          } else {
-            percentEl.textContent = '—';
-            bar.style.width = Math.min(95, (toMB(received)%10)*10) + '%';
-          }
-        }
-        statusEl.textContent = 'Download complete — preparing file...';
-        const blob = new Blob(chunks, {type:'application/vnd.android.package-archive'});
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = fileNameEl.textContent || 'PathPharm.apk';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        statusEl.textContent = 'Saved to device. Enable install from unknown sources to proceed.';
-      } catch(err){
-        statusEl.textContent = 'Streaming failed — opening direct link.';
-        window.open(FILE_URL, '_blank');
-      }
-    });
-  </script></body>
+    <div class="notes">
+      <strong>Install notes</strong>
+      <ul>
+        <li>Enable <em>Install unknown apps</em> for your browser in Android Settings to install this APK.</li>
+        <li>If the download fails, try again or use another browser.</li>
+        <li>Consider scanning the APK with an antivirus if you’re unsure.</li>
+      </ul>
+    </div>
+  </main>
+</body>
 </html>
