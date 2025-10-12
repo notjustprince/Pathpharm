@@ -6,12 +6,22 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import HomePage from "@/pages/HomePage";
+import BrowsePage from "@/pages/BrowsePage";
+import CategoryPage from "@/pages/CategoryPage";
+import ArticlePage from "@/pages/ArticlePage";
+import QuizPage from "@/pages/QuizPage";
+import DashboardPage from "@/pages/DashboardPage";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={HomePage} />
+      <Route path="/browse" component={BrowsePage} />
+      <Route path="/category/:slug" component={CategoryPage} />
+      <Route path="/article/:id" component={ArticlePage} />
+      <Route path="/quiz" component={QuizPage} />
+      <Route path="/dashboard" component={DashboardPage} />
       <Route component={NotFound} />
     </Switch>
   );
