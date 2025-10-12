@@ -5,14 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import { ArrowLeft, Award } from "lucide-react";
 import { useLocation } from "wouter";
-
-interface Question {
-  id: string;
-  question: string;
-  options: { id: string; text: string }[];
-  correctAnswer: string;
-  explanation: string;
-}
+import { useQuery } from "@tanstack/react-query";
+import type { Quiz } from "@shared/schema";
 
 export default function QuizPage() {
   const [, setLocation] = useLocation();
@@ -20,48 +14,22 @@ export default function QuizPage() {
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [quizComplete, setQuizComplete] = useState(false);
 
-  // TODO: remove mock functionality - this will come from API
-  const questions: Question[] = [
-    {
-      id: "1",
-      question: "Which chamber of the heart receives oxygenated blood from the lungs?",
-      options: [
-        { id: "a", text: "Right atrium" },
-        { id: "b", text: "Left atrium" },
-        { id: "c", text: "Right ventricle" },
-        { id: "d", text: "Left ventricle" },
-      ],
-      correctAnswer: "b",
-      explanation: "The left atrium receives oxygenated blood from the lungs via the pulmonary veins. This blood is then pumped into the left ventricle and distributed to the body.",
-    },
-    {
-      id: "2",
-      question: "What is the main function of the mitral valve?",
-      options: [
-        { id: "a", text: "Controls blood flow from right atrium to right ventricle" },
-        { id: "b", text: "Controls blood flow from left atrium to left ventricle" },
-        { id: "c", text: "Controls blood flow from right ventricle to pulmonary artery" },
-        { id: "d", text: "Controls blood flow from left ventricle to aorta" },
-      ],
-      correctAnswer: "b",
-      explanation: "The mitral valve (also called bicuspid valve) controls blood flow between the left atrium and left ventricle, ensuring blood flows in only one direction.",
-    },
-    {
-      id: "3",
-      question: "Which artery supplies oxygenated blood to the heart muscle?",
-      options: [
-        { id: "a", text: "Pulmonary artery" },
-        { id: "b", text: "Carotid artery" },
-        { id: "c", text: "Coronary artery" },
-        { id: "d", text: "Aorta" },
-      ],
-      correctAnswer: "c",
-      explanation: "The coronary arteries branch off from the aorta and supply oxygenated blood to the heart muscle itself. Blockage of these arteries can lead to heart attacks.",
-    },
-  ];
+  const { data: quizzes = [] } = useQuery<Quiz[]>({
+    queryKey: ["/api/quizzes"],
+  });
 
-  const currentQuestion = questions[currentQuestionIndex];
-  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  if (quizzes.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center">
+          <p className="text-muted-foreground">Loading quiz...</p>
+        </div>
+      </div>
+    );
+  }
+
+  const currentQuestion = quizzes[currentQuestionIndex];
+  const progress = ((currentQuestionIndex + 1) / quizzes.length) * 100;
   const answeredCount = Object.keys(answers).length;
   const correctCount = Object.values(answers).filter(Boolean).length;
   const score = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
@@ -73,7 +41,7 @@ export default function QuizPage() {
     }));
 
     setTimeout(() => {
-      if (currentQuestionIndex < questions.length - 1) {
+      if (currentQuestionIndex < quizzes.length - 1) {
         setCurrentQuestionIndex((prev) => prev + 1);
       } else {
         setQuizComplete(true);
@@ -103,7 +71,7 @@ export default function QuizPage() {
                 {score}%
               </div>
               <p className="text-muted-foreground">
-                You got {correctCount} out of {questions.length} questions correct
+                You got {correctCount} out of {quizzes.length} questions correct
               </p>
             </div>
 
@@ -138,6 +106,15 @@ export default function QuizPage() {
     );
   }
 
+  const questionOptions = currentQuestion.options.map((text, idx) => ({
+    id: String.fromCharCode(97 + idx),
+    text,
+  }));
+
+  const correctAnswerLetter = String.fromCharCode(
+    97 + currentQuestion.options.indexOf(currentQuestion.correctAnswer)
+  );
+
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-4xl mx-auto">
@@ -157,7 +134,7 @@ export default function QuizPage() {
               Anatomy Quiz
             </h1>
             <div className="text-sm text-muted-foreground" data-testid="text-question-counter">
-              Question {currentQuestionIndex + 1} of {questions.length}
+              Question {currentQuestionIndex + 1} of {quizzes.length}
             </div>
           </div>
           <Progress value={progress} className="h-2" />
@@ -171,8 +148,8 @@ export default function QuizPage() {
         <QuizCard
           key={currentQuestion.id}
           question={currentQuestion.question}
-          options={currentQuestion.options}
-          correctAnswer={currentQuestion.correctAnswer}
+          options={questionOptions}
+          correctAnswer={correctAnswerLetter}
           explanation={currentQuestion.explanation}
           onAnswer={handleAnswer}
         />

@@ -10,48 +10,33 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { Article, Quiz, Category } from "@shared/schema";
 
 export default function DashboardPage() {
   const [, setLocation] = useLocation();
 
-  // TODO: remove mock functionality - this will come from API
-  const recentActivity = [
-    {
-      id: "1",
-      type: "article",
-      title: "The Human Heart: Structure and Function",
-      category: "Circulatory System",
-      timestamp: "2 hours ago",
-    },
-    {
-      id: "2",
-      type: "quiz",
-      title: "Nervous System Quiz",
-      score: 85,
-      timestamp: "5 hours ago",
-    },
-    {
-      id: "3",
-      type: "article",
-      title: "Brain Anatomy: Regions and Functions",
-      category: "Nervous System",
-      timestamp: "1 day ago",
-    },
-    {
-      id: "4",
-      type: "quiz",
-      title: "Skeletal System Quiz",
-      score: 92,
-      timestamp: "1 day ago",
-    },
-    {
-      id: "5",
-      type: "article",
-      title: "Skeletal System Overview",
-      category: "Skeletal System",
-      timestamp: "2 days ago",
-    },
-  ];
+  const { data: articles = [] } = useQuery<Article[]>({
+    queryKey: ["/api/articles"],
+  });
+
+  const { data: quizzes = [] } = useQuery<Quiz[]>({
+    queryKey: ["/api/quizzes"],
+  });
+
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
+
+  // Mock recent activity - in a real app this would come from user activity tracking
+  const recentActivity = articles.slice(0, 5).map((article, idx) => ({
+    id: article.id,
+    type: idx % 2 === 0 ? "article" : "quiz",
+    title: article.title,
+    category: categories.find((c) => c.id === article.categoryId)?.title || "General",
+    score: idx % 2 === 0 ? undefined : 85 + idx * 2,
+    timestamp: `${idx + 1} ${idx === 0 ? 'hour' : 'hours'} ago`,
+  }));
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -69,28 +54,28 @@ export default function DashboardPage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <StatsCard
-              title="Articles Read"
-              value={24}
+              title="Articles Available"
+              value={articles.length}
               icon={BookOpen}
-              description="+3 this week"
+              description="Anatomy topics"
             />
             <StatsCard
-              title="Quiz Score"
-              value="87%"
+              title="Practice Questions"
+              value={quizzes.length}
               icon={Award}
-              description="Average accuracy"
+              description="Quiz questions"
             />
             <StatsCard
-              title="Topics Mastered"
-              value={12}
+              title="Categories"
+              value={categories.length}
               icon={Target}
-              description="Out of 45 total"
+              description="Topic areas"
             />
             <StatsCard
-              title="Study Streak"
-              value="7 days"
+              title="Study Resources"
+              value="100%"
               icon={TrendingUp}
-              description="Keep it up!"
+              description="Free access"
             />
           </div>
         </section>
@@ -127,12 +112,10 @@ export default function DashboardPage() {
                     <div>
                       <h3 className="font-semibold">{activity.title}</h3>
                       <div className="flex items-center gap-2 mt-1">
-                        {"category" in activity && (
-                          <span className="text-xs text-muted-foreground">
-                            {activity.category}
-                          </span>
-                        )}
-                        {"score" in activity && (
+                        <span className="text-xs text-muted-foreground">
+                          {activity.category}
+                        </span>
+                        {activity.score !== undefined && (
                           <span className="text-xs font-medium text-primary">
                             Score: {activity.score}%
                           </span>
