@@ -13,31 +13,33 @@ import {
   Layers,
 } from "lucide-react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import type { Category } from "@shared/schema";
 
-// TODO: remove mock functionality
-import brainImage from "@assets/stock_images/human_brain_nervous__336da88b.jpg";
-import heartImage from "@assets/stock_images/human_heart_circulat_74e00f6b.jpg";
-import boneImage from "@assets/stock_images/skeletal_system_bone_db515f41.jpg";
-import muscleImage from "@assets/stock_images/human_muscles_muscul_43c74d8f.jpg";
-import lungImage from "@assets/stock_images/human_respiratory_sy_52a9cb88.jpg";
+const iconMap: Record<string, any> = {
+  Brain,
+  Heart,
+  Bone,
+  Microscope,
+  Activity,
+  Wind,
+  User,
+  HandMetal,
+  Layers,
+};
 
 export default function BrowsePage() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
 
-  // TODO: remove mock functionality
-  const allCategories = [
-    { title: "Nervous System", icon: Brain, count: 45, image: brainImage, type: "system" },
-    { title: "Circulatory System", icon: Heart, count: 38, image: heartImage, type: "system" },
-    { title: "Skeletal System", icon: Bone, count: 52, image: boneImage, type: "system" },
-    { title: "Muscular System", icon: Activity, count: 41, image: muscleImage, type: "system" },
-    { title: "Respiratory System", icon: Wind, count: 28, image: lungImage, type: "system" },
-    { title: "Digestive System", icon: Microscope, count: 35, image: heartImage, type: "system" },
-    { title: "Head & Neck", icon: User, count: 62, type: "region" },
-    { title: "Upper Limb", icon: HandMetal, count: 48, type: "region" },
-    { title: "Lower Limb", icon: Layers, count: 54, type: "region" },
-    { title: "Torso", icon: Activity, count: 71, type: "region" },
-  ];
+  const { data: categories = [] } = useQuery<Category[]>({
+    queryKey: ["/api/categories"],
+  });
+
+  const allCategories = categories.map((cat) => ({
+    ...cat,
+    icon: iconMap[cat.icon] || Brain,
+  }));
 
   const filteredCategories = allCategories.filter((category) =>
     category.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -68,12 +70,12 @@ export default function BrowsePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {systemCategories.map((category) => (
                 <CategoryCard
-                  key={category.title}
+                  key={category.id}
                   title={category.title}
                   icon={category.icon}
-                  articleCount={category.count}
-                  image={category.image}
-                  onClick={() => setLocation(`/category/${category.title.toLowerCase().replace(/\s+/g, '-')}`)}
+                  articleCount={category.articleCount}
+                  image={category.image || undefined}
+                  onClick={() => setLocation(`/category/${category.slug}`)}
                 />
               ))}
             </div>
@@ -88,11 +90,11 @@ export default function BrowsePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {regionCategories.map((category) => (
                 <CategoryCard
-                  key={category.title}
+                  key={category.id}
                   title={category.title}
                   icon={category.icon}
-                  articleCount={category.count}
-                  onClick={() => setLocation(`/category/${category.title.toLowerCase().replace(/\s+/g, '-')}`)}
+                  articleCount={category.articleCount}
+                  onClick={() => setLocation(`/category/${category.slug}`)}
                 />
               ))}
             </div>
