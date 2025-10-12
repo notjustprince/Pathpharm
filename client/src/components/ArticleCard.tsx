@@ -5,7 +5,7 @@ import { ArrowRight, Clock } from "lucide-react";
 interface ArticleCardProps {
   title: string;
   excerpt: string;
-  image: string;
+  image?: string;
   readTime: number;
   category: string;
   onClick?: () => void;
@@ -25,13 +25,15 @@ export function ArticleCard({
       onClick={onClick}
       data-testid={`card-article-${title.toLowerCase().replace(/\s+/g, '-')}`}
     >
-      <div className="h-48 overflow-hidden">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+      {image && (
+        <div className="h-48 overflow-hidden">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
       <div className="p-6">
         <div className="text-xs font-medium text-primary mb-2">{category}</div>
         <h3 className="font-heading text-xl font-semibold mb-3 line-clamp-2">
