@@ -20,6 +20,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "wouter";
 
 // TODO: remove mock functionality - these images will come from actual data
 import heroImage from "@assets/stock_images/medical_anatomy_huma_1a726e72.jpg";
@@ -30,6 +31,8 @@ import muscleImage from "@assets/stock_images/human_muscles_muscul_43c74d8f.jpg"
 import lungImage from "@assets/stock_images/human_respiratory_sy_52a9cb88.jpg";
 
 export default function HomePage() {
+  const [, setLocation] = useLocation();
+
   // TODO: remove mock functionality
   const systemCategories = [
     { title: "Nervous System", icon: Brain, count: 45, image: brainImage },
@@ -79,8 +82,8 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       <Hero
-        onGetStarted={() => console.log("Get Started clicked")}
-        onBrowseTopics={() => console.log("Browse Topics clicked")}
+        onGetStarted={() => setLocation("/browse")}
+        onBrowseTopics={() => setLocation("/browse")}
       />
 
       <div className="container mx-auto px-4 py-16">
@@ -99,7 +102,7 @@ export default function HomePage() {
                 icon={category.icon}
                 articleCount={category.count}
                 image={category.image}
-                onClick={() => console.log(`${category.title} clicked`)}
+                onClick={() => setLocation(`/category/${category.title.toLowerCase().replace(/\s+/g, '-')}`)}
               />
             ))}
           </div>
@@ -119,7 +122,7 @@ export default function HomePage() {
                 title={category.title}
                 icon={category.icon}
                 articleCount={category.count}
-                onClick={() => console.log(`${category.title} clicked`)}
+                onClick={() => setLocation(`/category/${category.title.toLowerCase().replace(/\s+/g, '-')}`)}
               />
             ))}
           </div>
@@ -133,7 +136,7 @@ export default function HomePage() {
             Start learning with our most popular content
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredArticles.map((article) => (
+            {featuredArticles.map((article, idx) => (
               <ArticleCard
                 key={article.title}
                 title={article.title}
@@ -141,7 +144,7 @@ export default function HomePage() {
                 image={article.image}
                 readTime={article.readTime}
                 category={article.category}
-                onClick={() => console.log(`${article.title} clicked`)}
+                onClick={() => setLocation(`/article/${idx + 1}`)}
               />
             ))}
           </div>
@@ -164,9 +167,12 @@ export default function HomePage() {
             ]}
             correctAnswer="b"
             explanation="The left atrium receives oxygenated blood from the lungs via the pulmonary veins. This blood is then pumped into the left ventricle and distributed to the body."
-            onAnswer={(isCorrect) =>
-              console.log("Quiz answer correct:", isCorrect)
-            }
+            onAnswer={(isCorrect) => {
+              console.log("Quiz answer correct:", isCorrect);
+              if (isCorrect) {
+                setTimeout(() => setLocation("/quiz"), 2000);
+              }
+            }}
           />
         </section>
 
@@ -243,7 +249,12 @@ export default function HomePage() {
             Join thousands of students mastering human anatomy with our
             comprehensive learning platform
           </p>
-          <Button size="lg" className="px-8" data-testid="button-get-started-footer">
+          <Button 
+            size="lg" 
+            className="px-8" 
+            onClick={() => setLocation("/browse")}
+            data-testid="button-get-started-footer"
+          >
             Get Started Now
           </Button>
         </section>

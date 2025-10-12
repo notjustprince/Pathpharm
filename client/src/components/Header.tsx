@@ -27,15 +27,21 @@ export function Header({ onSearch }: HeaderProps) {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-browse">
-              Browse
-            </Button>
-            <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-quizzes">
-              Quizzes
-            </Button>
-            <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-dashboard">
-              Dashboard
-            </Button>
+            <Link href="/browse">
+              <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-browse">
+                Browse
+              </Button>
+            </Link>
+            <Link href="/quiz">
+              <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-quizzes">
+                Quizzes
+              </Button>
+            </Link>
+            <Link href="/dashboard">
+              <Button variant="ghost" className="hidden md:inline-flex" data-testid="button-dashboard">
+                Dashboard
+              </Button>
+            </Link>
             <ThemeToggle />
             <Button variant="ghost" size="icon" className="md:hidden" data-testid="button-menu">
               <Menu className="h-5 w-5" />
